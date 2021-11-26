@@ -1,0 +1,1 @@
+pattern { PART -[aux:pass]-> AUXPASS }
