@@ -1,8 +1,8 @@
 pattern {
   GOV [upos = VERB];
-  GOV -[advmod]-> DEP;
-  DEP [form="ici"|"ci"|"chi"|"íci"|"ící"|"ichi"|"yci"|"ycy"|"la"|"lai"|"laj"|"là"|"lá"|"lo"|"lou"];
-  DEP -[case]-> C;
+  GOV -[advmod]-> DLOC;
+  DLOC [form="ici"|"ci"|"chi"|"íci"|"ící"|"ichi"|"yci"|"ycy"|"la"|"lai"|"laj"|"là"|"lá"|"lo"|"lou"];
+  DLOC -[case]-> C;
   C [form="de"|"d"|"d'"]
 }
 

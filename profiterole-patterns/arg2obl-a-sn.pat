@@ -1,8 +1,8 @@
 pattern { 
 GOV [upos="VERB"];
-GOV -[obl]-> DEP;
-DEP [upos="NOUN"|"PROPN"|"PRON"|"DET"|"ADJ"];
-DEP -[case]-> C;
+GOV -[obl]-> OBLASN;
+OBLASN [upos="NOUN"|"PROPN"|"PRON"|"DET"|"ADJ"];
+OBLASN -[case]-> C;
 C [form="à"|"a"|"A"]
 }
 

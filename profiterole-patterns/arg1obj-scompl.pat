@@ -1,5 +1,5 @@
 pattern { 
 GOV [upos="VERB"];
-GOV -[obj]-> OBJCOMPL;
-OBJCOMPL [xpos="VERcjg"]
+GOV -[obj]-> OBJSCOMPL;
+OBJSCOMPL [xpos="VERcjg"]
 }

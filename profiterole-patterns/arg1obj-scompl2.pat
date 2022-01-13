@@ -1,4 +1,4 @@
 pattern { 
 GOV [upos="VERB"];
-GOV -[ccomp]-> OBJCOMPL
+GOV -[ccomp]-> OBJSCOMPL
 }

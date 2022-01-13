@@ -1,4 +1,4 @@
 pattern { 
-ATTSUBJSASN [upos="ADV"];
-ATTSUBJSASN -[cop]-> VETAT;
+ATTSUBJADV [upos="ADV"];
+ATTSUBJADV -[cop]-> VETAT;
 }
