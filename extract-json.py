@@ -41,6 +41,7 @@ with open(args.input, 'r') as json_file:
 			head = json_load[n]['matching']['nodes']['PART']
 			wlist.append(head)
 			dep = "@passive"
+			wlist.append(dep)
 
 		entries.append(wlist)
 

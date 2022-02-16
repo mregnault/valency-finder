@@ -41,8 +41,11 @@ class Token:
 def read_conllu(file_srcmf):
     with open(file_srcmf, "rt") as srcmf:
         sentences_srcmf = parse_incr(srcmf)
+        #print(sentences_srcmf[804])
         one_sent = dict()
         for index, sentence in enumerate(sentences_srcmf, start=0):
+            #if index == 804:
+            #    print(str(index) + "\t" + str(sentence))
             one_word = dict()
             sentence_obj = Sentence(index, one_word)
             for indexw, word in enumerate(sentence):
@@ -84,8 +87,11 @@ list_print = []
 
 for x in range(0, len(mysrcmf)):
     for elem in mygrewinfo:
+        #print(elem.sentID)
         if mysrcmf[x].sentID == int(elem.sentID):
+            #print(str(mysrcmf[x].sentID) + "\t" + str(elem.sentID))
             for y, value in enumerate(mysrcmf[x].sentTokens):
+                #print(mysrcmf[x].sentTokens[y].tokform)
                 if mysrcmf[x].sentTokens[y].tokID == int(elem.vID):
                     list_v = []
                     if mysrcmf[x].sentTokens[y].morpho is not None:
@@ -95,6 +101,7 @@ for x in range(0, len(mysrcmf)):
                     else:
                         verbform = '_'
                     list_v.append(str(mysrcmf[x].sentTokens[y].tokform).lower())
+                    #print(str(mysrcmf[x].sentID) + "\t" + list_v[0])
                     list_v.append(str(mysrcmf[x].sentTokens[y].lemma))
                     list_v.append(verbform)
                     list_v.append(str(elem.arg))
