@@ -73,16 +73,18 @@ class Attsuj:
         self.asinf = asinf
 
 class Objà:
-    def __init__(self, cld, asinf, asn):
+    def __init__(self, cld, asinf, asn, ascompl):
         self.cld = cld
         self.asinf = asinf
         self.asn = asn
+        self.ascompl = ascompl
 
 class Objde:
-    def __init__(self, clg, desinf, desn):
+    def __init__(self, clg, desinf, desn, descompl):
         self.clg = clg
         self.desinf = desinf
         self.desn = desn
+        self.descompl = descompl
 
 class Obl:
     def __init__(self, sursn, sinf, parsn, ensn, desn, avecsn, contresn, asn, desinf, asinf):
@@ -114,6 +116,8 @@ with open(args.inputgrew, "rt") as mygrew:
             entry.append(morpho)
             entry.append(valency2)
             verbs.append(entry)
+
+#print(verbs)
 """
 maplem = []
 with open(args.mapping, "rt") as mymap:
@@ -152,74 +156,82 @@ lemmata = {}
 for elem in verbs:
     vinf = elem[1]
     if vinf not in lemmata.keys():
-        lemvinf = Lexentry(vinf, Suj(0, 0, 0, 0), Obj(0, 0, 0), Attsuj(0, 0, 0, 0, 0), Objà(0, 0, 0), Objde(0, 0, 0), Obl(0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, 0)
+        lemvinf = Lexentry(vinf, Suj(0, 0, 0, 0), Obj(0, 0, 0), Attsuj(0, 0, 0, 0, 0), Objà(0, 0, 0, 0), Objde(0, 0, 0, 0), Obl(0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, 0)
         lemvinf.lemma = vinf
         lemmata[vinf] = lemvinf
+    #print("vinf " + vinf)
     if elem[3] == 'NSUBJ':
-        lemvinf.suj.clnsn += 1
+        lemmata[vinf].suj.clnsn += 1
     elif elem[3] == 'CSUBJSINF':
-        lemvinf.suj.sinf += 1
+        lemmata[vinf].suj.sinf += 1
     elif elem[3] == 'CSUBJSCOMPL':
-        lemvinf.suj.scompl += 1
+        lemmata[vinf].suj.scompl += 1
     elif elem[3] == 'NSUBJIMP':
-        lemvinf.suj.ilimp += 1
+        lemmata[vinf].suj.ilimp += 1
     elif elem[3] == 'OBJSN':
-        lemvinf.obj.clasn += 1
+        lemmata[vinf].obj.clasn += 1
     elif elem[3] == 'OBJSINF':
-        lemvinf.obj.sinf += 1
+        lemmata[vinf].obj.sinf += 1
     elif elem[3] == 'OBJSCOMPL':
-        lemvinf.obj.scompl += 1
+        lemmata[vinf].obj.scompl += 1
     elif elem[3] == 'ATTSUBJSASN':
-        lemvinf.attsuj.sasn += 1
+        lemmata[vinf].attsuj.sasn += 1
     elif elem[3] == 'ATTSUBJSCOMPL':
-        lemvinf.attsuj.scompl += 1
+        lemmata[vinf].attsuj.scompl += 1
     elif elem[3] == 'ATTSUBJSINF':
-        lemvinf.attsuj.sinf += 1
+        lemmata[vinf].attsuj.sinf += 1
     elif elem[3] == 'ATTSUBJASINF':
-        lemvinf.attsuj.asinf += 1
+        lemmata[vinf].attsuj.asinf += 1
     elif elem[3] == 'ATTSUBJADV':
-        lemvinf.attsuj.sadv += 1
+        lemmata[vinf].attsuj.sadv += 1
     elif elem[3] == 'IOBJA':
-        lemvinf.objà.cld += 1
+        lemmata[vinf].objà.cld += 1
     elif elem[3] == 'OBJAVINF':
-        lemvinf.objà.asinf += 1
+        lemmata[vinf].objà.asinf += 1
+        print(vinf)
+    elif elem[3] == 'OBJASCOMPL':
+        lemmata[vinf].objà.ascompl += 1
+        #print(elem[1])
     elif elem[3] == 'OBJASN':
-        lemvinf.objà.asn += 1
+        lemmata[vinf].objà.asn += 3
     elif elem[3] == 'IOBJDE':
-        lemvinf.objde.clg += 1
+        lemmata[vinf].objde.clg += 1
     elif elem[3] == 'OBJDEVINF':
-        lemvinf.objde.desinf += 1
+        lemmata[vinf].objde.desinf += 1
+        #print(lemvinf.lemma + " "+ elem[1])
+    elif elem[3] == 'OBJDESCOMPL':
+        lemmata[vinf].objde.descompl += 1
     elif elem[3] == 'OBJDESN':
-        lemvinf.objde.desn += 1
+        lemmata[vinf].objde.desn += 3
     elif elem[3] == 'OBLSURSN':
-        lemvinf.obl.sursn += 1
+        lemmata[vinf].obl.sursn += 3
     elif elem[3] == 'OBLSINF':
-        lemvinf.obl.sinf += 1
+        lemmata[vinf].obl.sinf += 1
     elif elem[3] == 'OBLPARSN':
-        lemvinf.obl.parsn += 1
+        lemmata[vinf].obl.parsn += 3
     elif elem[3] == 'OBLENSN':
-        lemvinf.obl.ensn += 1
+        lemmata[vinf].obl.ensn += 3
     elif elem[3] == 'OBLDESN':
-        lemvinf.obl.desn += 1
+        lemmata[vinf].obl.desn += 3
     elif elem[3] == 'OBLAVECSN':
-        lemvinf.obl.avecsn += 1
+        lemmata[vinf].obl.avecsn += 3
     elif elem[3] == 'OBLCONTRESN':
-        lemvinf.obl.contresn += 1
+        lemmata[vinf].obl.contresn += 3
     elif elem[3] == 'OBLASN':
-        lemvinf.obl.asn += 1
+        lemmata[vinf].obl.asn += 1
     elif elem[3] == 'OBLDESINF':
-        lemvinf.obl.desinf += 1
+        lemmata[vinf].obl.desinf += 1
     elif elem[3] == 'OBLASINF':
-        lemvinf.obl.asinf += 1
+        lemmata[vinf].obl.asinf += 1
     elif elem[3] == 'CLY':
-        lemvinf.loc += 1
+        lemmata[vinf].loc += 1
     elif elem[3] == 'DLOC':
-        lemvinf.dloc += 1
-    elif elem[3] == 'AUXPASS':
-        lemvinf.passif += 1
+        lemmata[vinf].dloc += 1
+    elif elem[3] == '@passive':
+        lemmata[vinf].passif += 1
     elif elem[3] == 'CLR':
-        lemvinf.refl += 1
-
+        lemmata[vinf].refl += 1
+#print(lemmata["convenir"].objde.desinf)
 # Architecture des entrées OFrLex : Suj, Obj, Objà, Objde, Obl, Obl2, Loc, Dloc
 # se Lemma : liste de verbes -> on propose entrées réflexives
 # %passif : faire liste de verbes pour lesquels générer des part. passés passifs + ppp
@@ -274,11 +286,16 @@ for elem in lemmata:
         verbeofr.objà.append("cld|à-sn")
     if lemmata[elem].loc >= 1 & lemmata[elem].objà.asinf >= 1 :
         verbeofr.objà.append("y|à-sinf")
+    if lemmata[elem].loc >= 1 & lemmata[elem].objà.ascompl >= 1 :
+        verbeofr.objà.append("y|à-scompl")
     # Fill iobj frame clg, desn, desinf
     if lemmata[elem].objde.clg >= 1 & lemmata[elem].objde.desn >= 1 :
         verbeofr.objde.append("clg|de-sn")
     if lemmata[elem].objde.clg >= 1 & lemmata[elem].objde.desinf >= 1 :
         verbeofr.objde.append("clg|de-sinf")
+        #print(elem)
+    if lemmata[elem].objde.clg >= 1 & lemmata[elem].objde.descompl >= 1 :
+        verbeofr.objde.append("clg|de-scompl")
     if lemmata[elem].obl.sursn >= 1:
         verbeofr.obl.append("sur-sn")
     if lemmata[elem].obl.sinf >= 1:
@@ -317,4 +334,4 @@ for elem in lemmata:
 
 with open(args.output, "w") as myoutput:
     for elem in newofr:
-        myoutput.write(str(elem.lemma) + "\t" + str(elem.suj) + "\t" + str(elem.obj) + "\t" + str(elem.att) + "\t" + str(elem.objà) + "\t" + str(elem.objde) + "\t" + str(elem.loc) + "\t" + str(elem.dloc) + "\t" + str(elem.macros) + "\n")
+        myoutput.write(str(elem.lemma) + "\t" + str(elem.suj) + "\t" + str(elem.obj) + "\t" + str(elem.att) + "\t" + str(elem.objà) + "\t" + str(elem.objde) + "\t" + str(elem.loc) + "\t" + str(elem.dloc) + "\t" + str(elem.obl) + "\t" + str(elem.macros) + "\n")

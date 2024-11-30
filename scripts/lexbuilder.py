@@ -37,21 +37,18 @@ class Token:
         self.head_word = head_word
         self.dependency = dependency
 
-
 def read_conllu(file_srcmf):
     with open(file_srcmf, "rt") as srcmf:
         sentences_srcmf = parse_incr(srcmf)
-        #print(sentences_srcmf[804])
         one_sent = dict()
-        for index, sentence in enumerate(sentences_srcmf, start=0):
-            #if index == 804:
-            #    print(str(index) + "\t" + str(sentence))
+        for sentence in sentences_srcmf:
+            sent_id = int(sentence.metadata['sent_id'])
             one_word = dict()
-            sentence_obj = Sentence(index, one_word)
+            sentence_obj = Sentence(sent_id, one_word)
             for indexw, word in enumerate(sentence):
                 token = Token(word["id"], word["form"], word["lemma"], word["upostag"], word["xpostag"], word["feats"], word["head"], word["deprel"])
                 sentence_obj.sentTokens[indexw] = token
-            one_sent[index] = sentence_obj
+            one_sent[sent_id] = sentence_obj
     return one_sent
 
 
@@ -86,30 +83,24 @@ mygrewinfo = read_grew(args.inputgrew)
 list_print = []
 
 for x in range(0, len(mysrcmf)):
+    y = mygrewinfo[x].sentID
     for elem in mygrewinfo:
-        #print(elem.sentID)
-        if mysrcmf[x].sentID == int(elem.sentID):
-            #print(str(mysrcmf[x].sentID) + "\t" + str(elem.sentID))
-            for y, value in enumerate(mysrcmf[x].sentTokens):
-                #print(mysrcmf[x].sentTokens[y].tokform)
-                if mysrcmf[x].sentTokens[y].tokID == int(elem.vID):
+        if int(elem.sentID) in mysrcmf:
+            sentence_obj = mysrcmf[int(elem.sentID)]
+            for indexw, value in sentence_obj.sentTokens.items():
+                if value.tokID == int(elem.vID):
                     list_v = []
-                    if mysrcmf[x].sentTokens[y].morpho is not None:
-                        verbform = ""
-                        for trait in mysrcmf[x].sentTokens[y].morpho.values():
-                            verbform = verbform + str(trait)
+                    if value.morpho is not None:
+                        verbform = "".join(str(trait) for trait in value.morpho.values())
                     else:
                         verbform = '_'
-                    list_v.append(str(mysrcmf[x].sentTokens[y].tokform).lower())
-                    #print(str(mysrcmf[x].sentID) + "\t" + list_v[0])
-                    list_v.append(str(mysrcmf[x].sentTokens[y].lemma))
-                    list_v.append(verbform)
-                    list_v.append(str(elem.arg))
-                    list_print.append(list_v)
+                    entry = (value.tokform.lower(), value.lemma, verbform, str(elem.arg))
+                    if entry not in list_print:
+                        list_print.append(entry)
 
 def build_output(outputfile):
     with open(outputfile, "w") as output:
         for elem in list_print:
-            output.write(elem[0] + "\t" + elem[1] + "\t" + elem[2] + "\t" + elem[3])
+            output.write("\t".join(elem) + "\n")
 
 build_output(args.output)
